@@ -104,7 +104,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         public
         override
         returns(
-            bool upKeepNeeded, 
+            bool upkeepNeeded, 
             bytes memory /* performData */
         )
         {
@@ -112,7 +112,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
             bool timePassed = ( (block.timestamp - s_lastTimeStamp ) > i_interval ) ;
             bool hasPlayers = ( s_players.length >= 1 ) ;
             bool hasBalance = ( address(this).balance > 0 );
-            upKeepNeeded = ( isOpen && timePassed && hasPlayers && hasBalance ) ; 
+            upkeepNeeded = ( isOpen && timePassed && hasPlayers && hasBalance ) ; 
     }
 
 
@@ -140,6 +140,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
             i_callbackGasLimit,
             NUM_WORDS
         );
+        //this is redundant !! since vrfCoordinator already emits an event
         emit RequestedRaffleWinner(requestId) ;
     }
 
@@ -159,6 +160,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         if(!success){
             revert Raffle__TransferFailed() ; 
         }
+
         emit WinnerPicked(recentWinner) ;
     }
 
@@ -188,7 +190,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         return s_players.length ; 
     }
 
-    function getLatestTimeStamp() public view returns(uint256){
+    function getLatestTimestamp() public view returns(uint256){
         return s_lastTimeStamp ; 
     }
 

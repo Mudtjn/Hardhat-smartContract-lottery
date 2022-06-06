@@ -3,3 +3,6 @@ artifacts
 cache
 .env
 gas_report.txt
+instructions_for_me.txt
+coverage
+
